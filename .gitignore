@@ -1,5 +1,140 @@
-data/model_data.xlsx
-data/processed_data.xlsx
-data/raw_data.xlsx
+# ===============================
+# Python
+# ===============================
 
-outputs/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ===============================
+# Virtual environments
+# ===============================
+
+venv/
+.env/
+.venv/
+ENV/
+env/
+
+# ===============================
+# Environment variables
+# ===============================
+
+.env
+
+# ===============================
+# Jupyter
+# ===============================
+
+.ipynb_checkpoints
+*.nbconvert.ipynb
+
+# ===============================
+# Pytest
+# ===============================
+
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# ===============================
+# Mypy / Ruff / Lint
+# ===============================
+
+.mypy_cache/
+.ruff_cache/
+.pyre/
+
+# ===============================
+# Logs
+# ===============================
+
+*.log
+logs/
+
+# ===============================
+# Data
+# ===============================
+data/
+
+# Keep folder structure
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/artifacts/.gitkeep
+
+# ===============================
+# Model artifacts
+# ===============================
+
+*.joblib
+*.pkl
+*.model
+*.onnx
+
+# ===============================
+# MLflow
+# ===============================
+
+mlruns/
+mlflow.db
+
+# ===============================
+# Docker
+# ===============================
+
+*.pid
+*.cid
+docker-compose.override.yml
+
+# ===============================
+# VSCode / IDE
+# ===============================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ===============================
+# MacOS
+# ===============================
+
+.DS_Store
+
+# ===============================
+# Windows
+# ===============================
+
+Thumbs.db
+Desktop.ini
+
+# ===============================
+# Temporary files
+# ===============================
+
+tmp/
+temp/
+*.tmp
+*.bak
+*.old
