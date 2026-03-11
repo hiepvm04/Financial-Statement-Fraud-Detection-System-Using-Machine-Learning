@@ -1,233 +1,187 @@
 <div align="center">
 
-# 📊 Financial Statement Fraud Detection
-**Hệ thống Phát hiện Gian lận Báo cáo Tài chính ứng dụng Học máy & MLOps**
+# 📊 Hệ thống Phát hiện Gian lận Báo cáo Tài chính
+**(Financial Statement Fraud Detection System)**
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-00a393.svg)](https://fastapi.tiangolo.com)
-[![MLflow](https://img.shields.io/badge/MLflow-2.0+-blue.svg)](https://mlflow.org/)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://www.docker.com/)
+[![MLflow](https://img.shields.io/badge/MLflow-2.2+-blue.svg)](https://mlflow.org/)
+[![Scikit-Learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![LightGBM](https://img.shields.io/badge/LightGBM-blue?logo=lightgbm)](https://lightgbm.readthedocs.io/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?logo=docker&logoColor=white)](https://www.docker.com/)
 
+*Giải pháp End-to-End Machine Learning (MLOps) tự động phát hiện gian lận tài chính tại thị trường chứng khoán Việt Nam.*
 </div>
 
 ---
 
 ## 📖 Giới thiệu
-Dự án cung cấp một giải pháp toàn diện (End-to-end Machine Learning Pipeline) nhằm **phát hiện gian lận trong báo cáo tài chính** của các công ty niêm yết trên thị trường chứng khoán Việt Nam. 
+Dự án **Financial Statement Fraud Detection** cung cấp một giải pháp toàn diện và tự động nhằm phân tích, đánh giá và dự đoán rủi ro gian lận trong báo cáo tài chính của các công ty niêm yết trên thị trường chứng khoán Việt Nam. 
 
-Hệ thống được thiết kế theo tiêu chuẩn **MLOps**, bao gồm từ khâu thu thập dữ liệu tự động (qua `vnstock`), làm sạch, trích xuất đặc trưng, huấn luyện nhiều mô hình học máy (XGBoost, LightGBM, ANN, SVM), theo dõi thí nghiệm bằng **MLflow**, cho đến việc triển khai mô hình (Model Serving) qua **FastAPI** và **Docker**.
-
----
-
-## ✨ Tính năng nổi bật
-- **⚡ Tự động hóa Dữ liệu (ETL Pipeline):** Tự động tải, làm sạch và xử lý dữ liệu tài chính từ thị trường chứng khoán Việt Nam.
-- **🧠 Huấn luyện Mô hình Đa dạng:** Tự động tìm kiếm siêu tham số và đánh giá các mô hình như `Logistic Regression`, `XGBoost`, `LightGBM`, `ANN` (Neural Networks), và `SVM`.
-- **📈 MLOps & Tracking:** Sẵn sàng tích hợp theo dõi quá trình huấn luyện và quản lý vòng đời mô hình bằng MLflow.
-- **🚀 Triển khai API (Model Serving):** Cung cấp API dự đoán thời gian thực với độ trễ thấp sử dụng RESTful API qua `FastAPI`.
-- **🐳 Dockerized:** Đóng gói toàn bộ ứng dụng và API bằng `Docker` và `docker-compose`, giúp dễ dàng triển khai trên mọi môi trường.
+Hệ thống được thiết kế theo tiêu chuẩn công nghiệp (MLOps), tự động hóa hoàn toàn từ khâu thu thập dữ liệu (ETL qua `vnstock`), làm sạch, trích xuất đặc trưng (Feature Engineering), huấn luyện các mô hình Machine Learning mạnh mẽ, cho đến việc theo dõi thí nghiệm (MLflow) và đóng gói triển khai (Docker + FastAPI).
 
 ---
 
-## 📁 Cấu trúc thư mục
+## ✨ Điểm nổi bật (Key Features)
+
+- **🔄 ETL Pipeline Tự động:** Tích hợp trực tiếp dữ liệu từ `vnstock`, xử lý báo cáo KQKD, Bảng cân đối kế toán, Lưu chuyển tiền tệ. Tự động tính toán các đặc trưng tài chính (Tài sản mềm, DSRI, AQI, Điểm số Accruals...).
+- **🧠 Kỹ thuật Trích xuất Đặc trưng Nâng cao:** Sử dụng `VarianceThreshold`, loại bỏ đa cộng tuyến (Multicollinearity), và chọn lọc đặc trưng tối ưu (Feature Selection) thông qua `Mutual Information`.
+- **🚀 Huấn luyện Đa Mô Hình (Multi-Model Training):** Tự động tinh chỉnh siêu tham số (Hyperparameter Tuning) và so sánh nhiều mô hình: `Logistic Regression`, `XGBoost`, `LightGBM`, `ANN` (MLPClassifier), và `SVM`.
+- **📈 MLflow Tracking:** Quản lý vòng đời mô hình chuyên nghiệp. Lưu trữ chi tiết các chỉ số (Accuracy, ROC-AUC, F1-Score, Precision-Recall) và tự động chọn ra Best Model cho từng lần huấn luyện.
+- **⚡ Model Serving với FastAPI:** Cung cấp RESTful API với độ trễ thấp, phục vụ dự đoán thời gian thực.
+- **🐳 Sẵn sàng Triển khai (Dockerized):** Đóng gói toàn bộ cấu phần API và MLflow Server thành các container độc lập qua `docker-compose`.
+
+---
+
+## 📁 Cấu trúc thư mục (Project Structure)
 
 ```text
 Fraud-Detection/
 │
 ├── api/                  # FastAPI Application (Model Serving)
-│   ├── main.py           # Entry point của API (endpoints)
-│   ├── schemas.py        # Định nghĩa cấu trúc dữ liệu Pydantic
-│   └── services.py       # Logic API dự đoán và load mô hình
+│   ├── main.py           # Khai báo cấu hình FastAPI, định tuyến (endpoints)
+│   ├── schemas.py        # Pydantic models để validate dữ liệu I/O
+│   └── services.py       # Services script (load memory, model prediction)
 │
-├── data/                 # Thư mục chứa dữ liệu cục bộ (raw, processed)
-├── deploy/               # Cấu hình triển khai (Dockerfile, docker-compose)
-├── models/               # Nơi lưu trữ các model weights sinh ra trong khi train (.joblib)
-├── notebooks/            # Jupyter Notebooks dùng để EDA và Demo
+├── data/                 # Thư mục chứa dữ liệu local (Raw & Processed)
+├── deploy/               # Cấu hình triển khai hạ tầng
+│   ├── Dockerfile        # Cấu trúc image cho FastAPI
+│   └── docker-compose.yml# Chạy đồng thời hệ thống FastAPI & MLflow
 │
-├── src/                  # Source code chính (Core Pipeline)
-│   ├── config.py         # Cấu hình hằng số, file path
-│   ├── data.py           # Tải và xử lý dữ liệu với vnstock
-│   ├── preprocessing.py  # Làm sạch dữ liệu và xử lý giá trị thiếu
-│   ├── features.py       # Trích xuất đặc trưng (Feature Engineering)
-│   ├── train.py          # Logic huấn luyện và đánh giá nhiều mô hình
-│   ├── evaluate.py       # Vẽ biểu đồ, tính toán performance metrics
-│   └── pipeline.py       # Chạy full end-to-end pipeline
+├── models/               # Nơi lưu Artifacts sinh ra (Best Model, Scaler, Features)
+├── notebooks/            # Jupyter Notebooks minh họa từng bước xử lý dữ liệu, EDA
 │
-├── tests/                # Unit Tests cho dự án
-├── pyproject.toml        # Quản lý dependencies, package metadata
-├── .env.example          # File mẫu cho biến môi trường
+├── src/                  # Mã nguồn lõi của ML Pipeline
+│   ├── config.py         # Cấu hình hằng số (paths, parameters)
+│   ├── data.py           # Logic ETL - Kết nối vnstock, sinh chỉ số tài chính, định dạnh nhãn (Fraud)
+│   ├── preprocessing.py  # Xử lý missing values, làm sạch (Data Cleaning)
+│   ├── features.py       # Code xử lý Feature Selection & Engineering
+│   ├── train.py          # Script grid-search, train, evaluate các model
+│   ├── evaluate.py       # Metrics & visualize kết quả đánh giá (ROC, PR Curves)
+│   └── pipeline.py       # Khởi tạo chu trình full End-to-End
+│
+├── tests/                # System & Unit test files
+├── pyproject.toml        # Quản lý thư viện hệ thống (dependencies)
+├── .env.example          # Thông tin cấu hình môi trường bảo mật
 └── README.md             # Project documentation (Tài liệu dự án)
 ```
 
 ---
 
-## ⚙️ Hướng dẫn Cài đặt & Khởi chạy chi tiết
-
-Dưới đây là các bước chi tiết để thiết lập môi trường, chạy pipeline huấn luyện và khởi tạo API dự đoán.
+## ⚙️ Hướng dẫn Cài đặt & Khởi chạy (Getting Started)
 
 ### 📋 Yêu cầu hệ thống (Prerequisites)
-- **Hệ điều hành:** Windows, macOS, hoặc Linux
-- **Python:** Phiên bản `>= 3.10` (Khuyến nghị 3.10 hoặc 3.11)
-- **Git:** Để clone mã nguồn dự án
-- **Docker & Docker Compose:** (Tùy chọn) - Dành cho việc triển khai vào môi trường ảo hóa.
+- **OS:** Windows, macOS, Linux.
+- **Python:** `>= 3.10`
+- **Docker & Docker Compose** (Nếu dùng cấu hình production)
 
----
+### 1. Cài đặt trực tiếp (Local Setup)
 
-### 1. Cài đặt trực tiếp (Local Development)
-
-**Bước 1: Tải mã nguồn**
-Mở Terminal (hoặc PowerShell trên Windows) và chạy lệnh:
 ```bash
+# 1. Clone dự án
 git clone https://github.com/hiepvm04/Financial-Statement-Fraud-Detection-Using-Machine-Learning.git
 cd Fraud-Detection
-```
 
-**Bước 2: Tạo và kích hoạt môi trường ảo (Virtual Environment)**
-Việc sử dụng môi trường ảo giúp tránh xung đột các thư viện Python trên máy tính của bạn:
-```bash
-# Tạo môi trường ảo có tên "venv"
+# 2. Tạo Virtual Environment và kích hoạt
 python -m venv venv
+source venv/bin/activate       # Trên macOS/Linux
+venv\Scripts\activate          # Trên Windows
 
-# Kích hoạt trên Windows (PowerShell/CMD):
-venv\Scripts\activate
-
-# Kích hoạt trên Linux/macOS:
-source venv/bin/activate
-```
-*(Dấu hiệu thành công: Đầu dòng lệnh của bạn sẽ xuất hiện chữ `(venv)`).*
-
-**Bước 3: Cài đặt các thư viện cần thiết**
-Dự án được cấu hình bằng `pyproject.toml`. Lệnh dưới đây sẽ cài đặt toàn bộ core pipeline, công cụ dev, notebooks và web server:
-```bash
+# 3. Cài đặt toàn bộ dependencies (bao gồm API, Notebook, Test libs)
 pip install -e .[all]
+
+# 4. Cấu hình biến môi trường
+cp .env.example .env  # Cập nhật VNSTOCK_API_KEY nếu cần thiết trong .env
 ```
 
-**Bước 4: Cấu hình biến môi trường**
-Dự án sử dụng file `.env` để bảo mật các cấu hình (chẳng hạn api key, port). 
-Tạo file `.env` từ file mẫu:
-- Trên **Windows (PowerShell)**: `copy .env.example .env`
-- Trên **Linux/Mac**: `cp .env.example .env`
+### 2. Chạy Pipeline Huấn luyện (Training Pipeline)
 
-Mở file `.env` vừa tạo và chỉnh sửa (nếu cần):
-```ini
-APP_ENV=development
-DEBUG=true
-PREDICTION_THRESHOLD=0.5
-# Điền API Key của vnstock nếu bạn dùng tính năng pro (nếu không, để trống)
-VNSTOCK_API_KEY=
+Dự án cung cấp luồng chạy tích hợp (từ Tải dữ liệu -> Làm sạch -> Trích xuất đặc trưng -> Train -> Lưu Model).
+
+Bạn có thể chạy tự động toàn bộ tiến trình thông qua module `pipeline.py`:
+```python
+# Tạo tệp lệnh run.py tại thư mục root
+from src.pipeline import run_full_pipeline
+
+# Pipeline sẽ kết nối Vnstock, down danh sách cổ phiếu cần phân tích 
+# và chạy quy trình huấn luyện đầy đủ
+run_full_pipeline(symbols=["VCB", "FPT", "VIC", "VNM", "SSI"])
 ```
+*Ghi chú: Mô hình tốt nhất (cùng với Scaler và danh sách các features được chọn) sẽ tự động lưu vào thư mục `models/`.*
+
+### 🔍 Quản lý mô hình bằng MLflow
+Để kiểm tra biểu đồ độ chính xác và lịch sử thông số của các mô hình đã được huấn luyện:
+```bash
+mlflow ui --port 5000
+```
+Truy cập: [http://localhost:5000](http://localhost:5000)
 
 ---
 
-### 2. Chạy Pipeline Huấn luyện (Training & MLflow)
+## 🚀 Triển khai API (Model Serving)
 
-Thay vì chạy từng file rải rác, hệ thống hiện tại đã được cấu trúc thành Pipeline tự động tự động thu thập (từ vnstock), xử lý, trích xuất đặc trưng và train các mô hình.
+Sau khi Pipeline Training hoàn tất và Best Model đã được lưu, API Serve sẵn sàng phục vụ.
 
-#### Cách A: Chạy và trực quan hóa qua Jupyter Notebook (Khuyên dùng cho tính năng tương tác)
-1. Khởi động môi trường Notebook:
-   ```bash
-   jupyter notebook
-   ```
-2. Trình duyệt sẽ mở ra. Điều hướng tới thư mục `notebooks/` và mở file `00_pipeline_demo.ipynb`.
-3. Chạy từng cell (ô lệnh) từ trên xuống dưới (`Shift + Enter`). File này sẽ hướng dẫn bạn cách hàm `run_full_pipeline` hoạt động.
-
-#### Cách B: Chạy qua Python Script
-Nếu bạn muốn chạy tự động trên terminal:
-1. Tạo một file tên là `run.py` ở thư mục gốc chứa nội dung:
-    ```python
-    from src.pipeline import run_full_pipeline
-
-    # Tải dữ liệu các mã công ty cụ thể, xử lý và train models.
-    # Dữ liệu sẽ được lưu tự động ở ./data và model ở ./models
-    artifacts = run_full_pipeline(symbols=["VCB", "FPT", "VIC", "VNM", "SSI"])
-    ```
-2. Thực thi file:
-   ```bash
-   python run.py
-   ```
-
-#### 📊 Đánh giá & Giám sát với MLflow
-Mỗi lần chạy pipeline, hàm `train.py` sẽ tự động ghi lại các metrics (Accuracy, ROC_AUC, F1...) và thông số siêu tham số của toàn bộ mô hình (`XGBoost`, `LightGBM`, `ANN`...) thông qua MLflow.
-
-Để xem kết quả và quyết định mô hình tốt nhất:
-1. Mở một terminal mới (nhớ kích hoạt lại `venv`), gõ lệnh:
-   ```bash
-   mlflow ui --port 5000
-   ```
-2. Mở trình duyệt và truy cập: [http://localhost:5000](http://localhost:5000)
-3. Giao diện quản lý MLflow sẽ hiển thị chi tiết các lần train, bạn có thể click vào để so sánh đồ thị và chọn ra "Best Model". 
-*(Hệ thống đã tự động lưu Best Model ra dạng `models/best_model.joblib`)*.
-
----
-
-### 3. Triển khai API (Model Serving FastAPI)
-
-Khi hàm huấn luyện đã lưu thành công mô hình cùng Scaler và features list vào thư mục `models/`, hệ thống đã sẵn sàng dự đoán thời gian thực.
-
-#### Khởi chạy trực tiếp (Local Test)
-Mở terminal và chạy lệnh:
+### 💻 Khởi chạy Local
 ```bash
 uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
 ```
+- **Live API Endpoint:** [http://localhost:8000](http://localhost:8000)
+- **Interactive API Docs (Swagger UI):** [http://localhost:8000/docs](http://localhost:8000/docs)
 
-- **Kiểm tra API có đang hoạt động:** Truy cập [http://localhost:8000/](http://localhost:8000/)
-- **Swagger UI (Tài liệu tương tác):** Truy cập [http://localhost:8000/docs](http://localhost:8000/docs). Từ đây bạn có thể ấn "Try it out" để test trực tiếp API bằng giao diện web mà không cần viết code.
+### 🐳 Khởi chạy Production bằng Docker
 
-#### 🐳 Khởi chạy bằng Docker (Dành cho Production)
-Giúp mô phỏng chính xác môi trường khi bạn mang dự án lên cloud (AWS, GCP, Azure).
-
-1. Bạn chỉ cần đảm bảo máy tính đã cài đặt và bật [Docker Desktop](https://www.docker.com/products/docker-desktop/).
-2. Di chuyển vào thư mục deploy:
-   ```bash
-   cd deploy
-   ```
-3. Khởi Tải và build Container:
-   ```bash
-   docker-compose up --build -d
-   ```
-   *Lệnh này sẽ tự động tải các base image, thiết lập python, cài đặt requirements và khởi chạy.*
-   
-Hệ thống sẽ chạy song song 2 dịch vụ độc lập trong môi trường ảo hóa:
-- **FastAPI Model Serving:** API nhận dự đoán, có sẵn tại `http://localhost:8000`.
-- **MLflow Tracking Server:** Máy chủ Tracking độc lập, khả dụng tại `http://localhost:5000`.
-
-*(Muốn dừng toàn bộ server của Docker, dùng lệnh: `docker-compose down`)*
+Môi trường Docker sẽ chạy đồng thời Web Server cho API và Tracking Server cho MLflow.
+```bash
+cd deploy
+docker-compose up --build -d
+```
+API sẽ lắng nghe ở port `:8000` và MLflow ở port `:5000`. Để dừng toàn bộ hệ thống, sử dụng `docker-compose down`.
 
 ---
 
-## 🛠 Thông tin API (Endpoints) chính
+## 🛠 Tài liệu API (API Reference)
 
-### 1. Lấy trạng thái hệ thống: `GET /health`
-Mục đích: Đảm bảo mô hình (Model) và bộ chuẩn hóa dữ liệu (Scaler) đã load thành công trên Server RAM hay chưa.
-**CURL Demo:**
+### 1. Kiểm tra trạng thái hệ thống: `GET /health`
 ```bash
 curl -X 'GET' 'http://localhost:8000/health' -H 'accept: application/json'
 ```
+*Đầu ra mong đợi:*
+```json
+{
+  "status": "ok",
+  "model_loaded": true,
+  "scaler_loaded": true,
+  "feature_count": 12,
+  "model_name": "XGBClassifier"
+}
+```
 
-### 2. Dự đoán Gian lận: `POST /predict`
-Bạn cần gửi một JSON object chứa chính xác các `feature_cols` mà mô hình đã được train.
-**CURL Demo:**
+### 2. Gửi yêu cầu dự đoán: `POST /predict`
+Body request yêu cầu chứa chính xác các `features` đã được lựa chọn ở bước huấn luyện.
+
 ```bash
 curl -X 'POST' \
   'http://localhost:8000/predict' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-  "Loi_nhuan_sau_thue": 0.15,
-  "Tong_tai_san": 0.8,
-  "He_so_no": 0.65,
-  "ROE": 0.2,
-  "Chi_so_A": 1.2,
-  "Chi_so_B": 0.95
+  "DSRI": 1.15,
+  "GMI": 0.95,
+  "AQI": 1.05,
+  "SGI": 1.2,
+  "TATA": 0.03,
+  "Firm_Size": 15.5
 }'
 ```
-*(Ghi chú: Các trường trong ví dụ bên trên chỉ mang tính minh họa, API thực tế sẽ báo lỗi nêu chính xác danh sách các feature tài chính bị thiếu nếu bạn gửi sai cấu trúc).*
+*(Ghi chú: Số lượng features đầu vào có thể thay đổi tùy thuộc vào cấu hình Pipeline tự động lựa chọn đặc trưng)*
 
-**Đầu ra mong đợi:**
+*Đầu ra mong đợi:*
 ```json
 {
   "label": "Fraud",
   "fraud_prediction": 1,
-  "fraud_probability": 0.87521,
+  "fraud_probability": 0.892345,
   "threshold": 0.5,
   "model_name": "XGBClassifier"
 }
@@ -235,15 +189,15 @@ curl -X 'POST' \
 
 ---
 
-## 💻 Tech Stack cốt lõi
-- **Data Science / Thuật toán:** `scikit-learn`, `XGBoost`, `LightGBM`, `Pandas`, `NumPy`
-- **Data Provider API:** `vnstock` (Lấy dữ liệu cổ phiếu VN)
-- **MLOps / Tracking:** `MLflow`
-- **Backend / API Framework:** `FastAPI`, `Uvicorn`, `Pydantic` (Data Validation)
-- **Deployment & Infra:** `Docker`, `Docker Compose`
+## 💻 Công nghệ Cốt lõi (Tech Stack)
+- **Machine Learning Data Processing:** `Pandas`, `NumPy`, `Scikit-Learn`
+- **Core ML Algorithms:** `XGBoost`, `LightGBM`, `Scikit-Learn (SVM, Logsitic Regression, ANN)`
+- **Data Source API:** `vnstock` (Truy xuất dữ liệu thị trường Việt Nam)
+- **Model Monitoring:** `MLflow` (Experiment tracking & Artifact storage)
+- **Backend & Web API:** `FastAPI`, `Uvicorn`, `Pydantic`
+- **Infrastructure:** `Docker`, `Docker-Compose`
 
 ---
 
 ## 📝 Giấy phép (License)
-Dự án được phân phối dưới giấy phép MIT. Vui lòng xem `pyproject.toml` để trích xuất quyền cấp phép chính thức.
-
+Dự án được phân phối dưới giấy phép MIT. Xem tệp `pyproject.toml` để biết thêm chi tiết.
