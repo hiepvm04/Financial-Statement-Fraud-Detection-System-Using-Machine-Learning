@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📊 Financial Statement Fraud Detection System
+# Financial Statement Fraud Detection System
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-00a393.svg)](https://fastapi.tiangolo.com)
@@ -9,7 +9,7 @@
 [![LightGBM](https://img.shields.io/badge/LightGBM-blue?logo=lightgbm)](https://lightgbm.readthedocs.io/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?logo=docker&logoColor=white)](https://www.docker.com/)
 
-*An end-to-end MLOps system for detecting financial statement fraud in the Vietnamese stock market.*
+*An end-to-end project for detecting financial statement fraud in the Vietnamese stock market.*
 
 </div>
 
@@ -21,7 +21,7 @@ The **Financial Statement Fraud Detection System** is an end-to-end machine lear
 
 The system follows **modern MLOps practices**, automating the full pipeline from:
 
-- Data extraction (ETL via `vnstock`)
+- Data extraction
 - Data preprocessing and cleaning
 - Feature engineering
 - Training multiple machine learning models
@@ -123,6 +123,7 @@ Fraud-Detection/
 │   ├── Dockerfile
 │   └── docker-compose.yml
 │
+├── scripts/ 
 ├── models/               # Stored artifacts (trained models, scalers, features)
 │
 ├── notebooks/            # Jupyter notebooks for exploration and EDA
