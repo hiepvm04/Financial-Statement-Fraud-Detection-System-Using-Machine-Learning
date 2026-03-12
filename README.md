@@ -1,7 +1,6 @@
 <div align="center">
 
-# 📊 Hệ thống Phát hiện Gian lận Báo cáo Tài chính
-**(Financial Statement Fraud Detection System)**
+# 📊 Financial Statement Fraud Detection System
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-00a393.svg)](https://fastapi.tiangolo.com)
@@ -10,136 +9,223 @@
 [![LightGBM](https://img.shields.io/badge/LightGBM-blue?logo=lightgbm)](https://lightgbm.readthedocs.io/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?logo=docker&logoColor=white)](https://www.docker.com/)
 
-*Giải pháp End-to-End Machine Learning (MLOps) tự động phát hiện gian lận tài chính tại thị trường chứng khoán Việt Nam.*
+*An end-to-end MLOps system for detecting financial statement fraud in the Vietnamese stock market.*
+
 </div>
 
 ---
 
-## 📖 Giới thiệu
-Dự án **Financial Statement Fraud Detection** cung cấp một giải pháp toàn diện và tự động nhằm phân tích, đánh giá và dự đoán rủi ro gian lận trong báo cáo tài chính của các công ty niêm yết trên thị trường chứng khoán Việt Nam. 
+# Overview
 
-Hệ thống được thiết kế theo tiêu chuẩn công nghiệp (MLOps), tự động hóa hoàn toàn từ khâu thu thập dữ liệu (ETL qua `vnstock`), làm sạch, trích xuất đặc trưng (Feature Engineering), huấn luyện các mô hình Machine Learning mạnh mẽ, cho đến việc theo dõi thí nghiệm (MLflow) và đóng gói triển khai (Docker + FastAPI).
+The **Financial Statement Fraud Detection System** is an end-to-end machine learning solution designed to analyze financial statements and detect potential fraud in companies listed on the Vietnamese stock market.
+
+The system follows **modern MLOps practices**, automating the full pipeline from:
+
+- Data extraction (ETL via `vnstock`)
+- Data preprocessing and cleaning
+- Feature engineering
+- Training multiple machine learning models
+- Experiment tracking with **MLflow**
+- Model deployment via **FastAPI**
+- Containerized deployment with **Docker**
+
+This project demonstrates a **production-ready machine learning workflow** for financial fraud detection.
 
 ---
 
-## ✨ Điểm nổi bật (Key Features)
+# Key Features
 
-- **🔄 ETL Pipeline Tự động:** Tích hợp trực tiếp dữ liệu từ `vnstock`, xử lý báo cáo KQKD, Bảng cân đối kế toán, Lưu chuyển tiền tệ. Tự động tính toán các đặc trưng tài chính (Tài sản mềm, DSRI, AQI, Điểm số Accruals...).
-- **🧠 Kỹ thuật Trích xuất Đặc trưng Nâng cao:** Sử dụng `VarianceThreshold`, loại bỏ đa cộng tuyến (Multicollinearity), và chọn lọc đặc trưng tối ưu (Feature Selection) thông qua `Mutual Information`.
-- **🚀 Huấn luyện Đa Mô Hình (Multi-Model Training):** Tự động tinh chỉnh siêu tham số (Hyperparameter Tuning) và so sánh nhiều mô hình: `Logistic Regression`, `XGBoost`, `LightGBM`, `ANN` (MLPClassifier), và `SVM`.
-- **📈 MLflow Tracking:** Quản lý vòng đời mô hình chuyên nghiệp. Lưu trữ chi tiết các chỉ số (Accuracy, ROC-AUC, F1-Score, Precision-Recall) và tự động chọn ra Best Model cho từng lần huấn luyện.
-- **⚡ Model Serving với FastAPI:** Cung cấp RESTful API với độ trễ thấp, phục vụ dự đoán thời gian thực.
-- **🐳 Sẵn sàng Triển khai (Dockerized):** Đóng gói toàn bộ cấu phần API và MLflow Server thành các container độc lập qua `docker-compose`.
+### Automated ETL Pipeline
+- Collects financial statement data directly from `vnstock`
+- Supports:
+  - Balance Sheet
+  - Income Statement
+  - Cash Flow
+- Automatically computes financial fraud indicators such as:
+  - DSRI
+  - AQI
+  - Accrual-based ratios
+  - Soft asset ratios
 
 ---
 
-## 📁 Cấu trúc thư mục (Project Structure)
+### Advanced Feature Engineering
+The pipeline includes several advanced feature selection techniques:
+
+- Variance filtering (`VarianceThreshold`)
+- Multicollinearity removal
+- Feature selection using **Mutual Information**
+
+These techniques help improve model performance and reduce noise.
+
+---
+
+### Multi-Model Training
+The training pipeline automatically trains and compares multiple machine learning models:
+
+- Logistic Regression
+- Support Vector Machine (SVM)
+- XGBoost
+- LightGBM
+- Artificial Neural Network (MLPClassifier)
+
+The system performs **hyperparameter tuning** and selects the best-performing model.
+
+---
+
+### MLflow Experiment Tracking
+The project integrates **MLflow** for full experiment tracking:
+
+- Logs training parameters
+- Tracks evaluation metrics:
+  - Accuracy
+  - Precision
+  - Recall
+  - F1 Score
+  - ROC-AUC
+- Stores model artifacts
+- Enables experiment comparison
+
+---
+
+### FastAPI Model Serving
+The trained model is deployed through a **FastAPI REST API**, enabling:
+
+- Real-time fraud prediction
+- Low-latency model inference
+- Interactive API documentation (Swagger UI)
+
+---
+
+### Dockerized Deployment
+The entire system can be deployed using **Docker + Docker Compose**, which includes:
+
+- FastAPI server
+- MLflow tracking server
+
+This allows easy local or production deployment.
+
+---
+
+# 📁 Project Structure
 
 ```text
 Fraud-Detection/
 │
 ├── api/                  # FastAPI Application (Model Serving)
-│   ├── main.py           # Khai báo cấu hình FastAPI, định tuyến (endpoints)
-│   ├── schemas.py        # Pydantic models để validate dữ liệu I/O
-│   └── services.py       # Services script (load memory, model prediction)
+│   ├── main.py           # FastAPI configuration and endpoints
+│   ├── schemas.py        # Pydantic models for input/output validation
+│   └── services.py       # Model loading and prediction logic
 │
-├── data/                 # Thư mục chứa dữ liệu local (Raw & Processed)
-├── deploy/               # Cấu hình triển khai hạ tầng
-│   ├── Dockerfile        # Cấu trúc image cho FastAPI
-│   └── docker-compose.yml# Chạy đồng thời hệ thống FastAPI & MLflow
+├── data/                 # Raw and processed datasets
 │
-├── models/               # Nơi lưu Artifacts sinh ra (Best Model, Scaler, Features)
-├── notebooks/            # Jupyter Notebooks minh họa từng bước xử lý dữ liệu, EDA
+├── deploy/               # Deployment configuration
+│   ├── Dockerfile
+│   └── docker-compose.yml
 │
-├── src/                  # Mã nguồn lõi của ML Pipeline
-│   ├── config.py         # Cấu hình hằng số (paths, parameters)
-│   ├── data.py           # Logic ETL - Kết nối vnstock, sinh chỉ số tài chính, định dạnh nhãn (Fraud)
-│   ├── preprocessing.py  # Xử lý missing values, làm sạch (Data Cleaning)
-│   ├── features.py       # Code xử lý Feature Selection & Engineering
-│   ├── train.py          # Script grid-search, train, evaluate các model
-│   ├── evaluate.py       # Metrics & visualize kết quả đánh giá (ROC, PR Curves)
-│   └── pipeline.py       # Khởi tạo chu trình full End-to-End
+├── models/               # Stored artifacts (trained models, scalers, features)
 │
-├── tests/                # System & Unit test files
-├── pyproject.toml        # Quản lý thư viện hệ thống (dependencies)
-├── .env.example          # Thông tin cấu hình môi trường bảo mật
-└── README.md             # Project documentation (Tài liệu dự án)
+├── notebooks/            # Jupyter notebooks for exploration and EDA
+│
+├── src/                  # Core ML pipeline source code
+│   ├── config.py         # Global configuration
+│   ├── data.py           # Data collection and ETL logic
+│   ├── preprocessing.py  # Data cleaning
+│   ├── features.py       # Feature engineering
+│   ├── train.py          # Model training
+│   ├── evaluate.py       # Model evaluation and metrics
+│   └── pipeline.py       # End-to-end pipeline execution
+│
+├── tests/                # Unit and system tests
+│
+├── pyproject.toml        # Project dependencies
+├── .env.example          # Environment configuration
+└── README.md
 ```
 
 ---
 
-## ⚙️ Hướng dẫn Cài đặt & Khởi chạy (Getting Started)
+## ⚙️ Installation & Getting Started
 
-### 📋 Yêu cầu hệ thống (Prerequisites)
-- **OS:** Windows, macOS, Linux.
+### System Requirements (Prerequisites)
+- **Operating System:** Windows, macOS, or Linux
 - **Python:** `>= 3.10`
-- **Docker & Docker Compose** (Nếu dùng cấu hình production)
+- **Docker & Docker Compose** (optional, for production deployment)
 
-### 1. Cài đặt trực tiếp (Local Setup)
+---
+
+### 1️⃣ Local Setup
 
 ```bash
-# 1. Clone dự án
+# 1. Clone the repository
 git clone https://github.com/hiepvm04/Financial-Statement-Fraud-Detection-Using-Machine-Learning.git
 cd Fraud-Detection
 
-# 2. Tạo Virtual Environment và kích hoạt
+# 2. Create and activate a virtual environment
 python -m venv venv
-source venv/bin/activate       # Trên macOS/Linux
-venv\Scripts\activate          # Trên Windows
 
-# 3. Cài đặt toàn bộ dependencies (bao gồm API, Notebook, Test libs)
+# macOS / Linux
+source venv/bin/activate
+
+# Windows
+venv\Scripts\activate
+
+# 3. Install all dependencies (API, notebooks, testing libraries)
 pip install -e .[all]
 
-# 4. Cấu hình biến môi trường
-cp .env.example .env  # Cập nhật VNSTOCK_API_KEY nếu cần thiết trong .env
+# 4. Configure environment variables
+cp .env.example .env
+# Update VNSTOCK_API_KEY in the .env file if required
 ```
+### 2️⃣ Run the Training Pipeline
 
-### 2. Chạy Pipeline Huấn luyện (Training Pipeline)
+The project provides an integrated pipeline that executes the full workflow:
 
-Dự án cung cấp luồng chạy tích hợp (từ Tải dữ liệu -> Làm sạch -> Trích xuất đặc trưng -> Train -> Lưu Model).
+**Data Collection → Data Cleaning → Feature Engineering → Model Training → Model Saving**
+
+Run the pipeline with:
+
 ```bash
-python scripts/run_pipeline.py
-# (Và các scripts tương ứng để chạy huấn luyện)
+python -m scripts.run_pipeline
 ```
-
-### 🔍 Quản lý mô hình bằng MLflow
-Để kiểm tra biểu đồ độ chính xác và lịch sử thông số của các mô hình đã được huấn luyện:
-```bash
-mlflow ui --port 5000
-```
-Truy cập: [http://localhost:5000](http://localhost:5000)
-
 ---
 
-## 🚀 Triển khai API (Model Serving)
+## API Deployment (Model Serving)
 
-Sau khi Pipeline Training hoàn tất và Best Model đã được lưu, API Serve sẵn sàng phục vụ.
+After the training pipeline is completed and the **best model has been saved**, the API is ready to serve predictions.
 
-### 💻 Khởi chạy Local
+### Run Locally
+
+Start the FastAPI server:
+
 ```bash
 uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 - **Live API Endpoint:** [http://localhost:8000](http://localhost:8000)
 - **Interactive API Docs (Swagger UI):** [http://localhost:8000/docs](http://localhost:8000/docs)
 
-### 🐳 Khởi chạy Production bằng Docker
+### Production Deployment with Docker
 
-Môi trường Docker sẽ chạy đồng thời Web Server cho API và Tracking Server cho MLflow.
+The Docker environment runs both the FastAPI server and the MLflow tracking server simultaneously.
 ```bash
 cd deploy
 docker-compose up --build -d
 ```
-API sẽ lắng nghe ở port `:8000` và MLflow ở port `:5000`. Để dừng toàn bộ hệ thống, sử dụng `docker-compose down`.
+The API will listen on port `:8000` and MLflow will run on port `:5000`.  
+To stop all running services, use:
 
+```bash
+docker-compose down
+```
 ---
+## API Reference
 
-## 🛠 Tài liệu API (API Reference)
+### 1️⃣ System Health Check: `GET /health`
 
-### 1. Kiểm tra trạng thái hệ thống: `GET /health`
 ```bash
 curl -X 'GET' 'http://localhost:8000/health' -H 'accept: application/json'
 ```
-*Đầu ra mong đợi:*
+*Expected output:*
 ```json
 {
   "status": "ok",
@@ -150,9 +236,8 @@ curl -X 'GET' 'http://localhost:8000/health' -H 'accept: application/json'
 }
 ```
 
-### 2. Gửi yêu cầu dự đoán: `POST /predict`
-Body request yêu cầu chứa chính xác các `features` đã được lựa chọn ở bước huấn luyện.
-
+### 2️⃣ Fraud Prediction Request: `POST /predict`
+The request body must contain the exact `features` selected during the training stage.
 ```bash
 curl -X 'POST' \
   'http://localhost:8000/predict' \
@@ -167,9 +252,9 @@ curl -X 'POST' \
   "Firm_Size": 15.5
 }'
 ```
-*(Ghi chú: Số lượng features đầu vào có thể thay đổi tùy thuộc vào cấu hình Pipeline tự động lựa chọn đặc trưng)*
+*Note: The number of input features may vary depending on the automatic feature selection configuration used in the training pipeline.*
 
-*Đầu ra mong đợi:*
+*Expected output:*
 ```json
 {
   "label": "Fraud",
@@ -182,7 +267,7 @@ curl -X 'POST' \
 
 ---
 
-## 💻 Công nghệ Cốt lõi (Tech Stack)
+## Tech Stack
 - **Machine Learning Data Processing:** `Pandas`, `NumPy`, `Scikit-Learn`
 - **Core ML Algorithms:** `XGBoost`, `LightGBM`, `Scikit-Learn (SVM, Logsitic Regression, ANN)`
 - **Data Source API:** `vnstock` 
@@ -192,3 +277,11 @@ curl -X 'POST' \
 
 ---
 
+## Contact Information
+
+This project is a personal product for coursework and practical research. If you find it useful or have suggestions for improving the code/architecture, please open an Issue or reach out via:
+
+- **Author:** Vu Manh Hiep
+- **Email:** hiepvm04@gmail.com
+- **LinkedIn:** 
+- **Github:** https://github.com/hiepvm04
