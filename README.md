@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📊 Financial Statement Fraud Detection System
+# Financial Statement Fraud Detection System
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-00a393.svg)](https://fastapi.tiangolo.com)
@@ -9,7 +9,6 @@
 [![XGBoost](https://img.shields.io/badge/XGBoost-2.0+-orange.svg)](https://xgboost.readthedocs.io/)
 [![LightGBM](https://img.shields.io/badge/LightGBM-4.0+-blue.svg)](https://lightgbm.readthedocs.io/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?logo=docker&logoColor=white)](https://www.docker.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 *Hệ thống MLOps end-to-end phát hiện gian lận báo cáo tài chính trên thị trường chứng khoán Việt Nam.*
 
@@ -17,7 +16,7 @@
 
 ---
 
-## 📌 Overview
+## Overview
 
 **Financial Statement Fraud Detection System** là một giải pháp machine learning end-to-end, được thiết kế để phân tích báo cáo tài chính và phát hiện gian lận tiềm ẩn trong các công ty niêm yết trên thị trường chứng khoán Việt Nam.
 
@@ -34,7 +33,7 @@ Hệ thống tuân theo **quy trình MLOps hiện đại**, tự động hóa to
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 ### 🔄 Automated ETL Pipeline
 - Thu thập dữ liệu tài chính theo lô (`BATCH_SIZE = 5`) với rate-limiting
@@ -74,12 +73,12 @@ Hệ thống tuân theo **quy trình MLOps hiện đại**, tự động hóa to
 | Validation | 2022 |
 | Test | 2023 |
 
-### 📊 MLflow Experiment Tracking
+### MLflow Experiment Tracking
 - Log params, metrics: Accuracy, Precision, Recall, F1, ROC-AUC, PR-AUC
 - Lưu artifacts: `best_model.joblib`, `scaler.joblib`, `feature_cols.joblib`
 - MLflow UI để so sánh các experiment
 
-### 🌐 FastAPI Serving
+### FastAPI Serving
 - `GET /health` — Kiểm tra trạng thái API và model
 - `POST /predict` — Dự đoán gian lận theo thời gian thực
 - Swagger UI tại `/docs`
@@ -213,7 +212,7 @@ cp .env.example .env
 
 ---
 
-## 🚀 Running the Pipeline
+## Running the Pipeline
 
 ### Chạy toàn bộ Pipeline (End-to-End)
 
@@ -250,7 +249,7 @@ Truy cập: [http://localhost:5000](http://localhost:5000)
 
 ---
 
-## 🌐 API Deployment
+## API Deployment
 
 ### Chạy API Locally
 
@@ -283,7 +282,7 @@ docker-compose down
 
 ---
 
-## 📡 API Reference
+## API Reference
 
 ### `GET /health` — Health Check
 
@@ -357,7 +356,7 @@ curl -X POST http://localhost:8000/predict \
 
 ---
 
-## 🧪 Running Tests
+## Running Tests
 
 ```bash
 # Chạy toàn bộ tests
@@ -369,7 +368,7 @@ pytest --cov=src --cov=api --cov-report=term-missing
 
 ---
 
-## 📦 Tech Stack
+## Tech Stack
 
 | Nhóm | Thư viện |
 |---|---|
@@ -384,7 +383,7 @@ pytest --cov=src --cov=api --cov-report=term-missing
 
 ---
 
-## 📬 Contact
+## Contact
 
 Đây là dự án cá nhân cho mục đích học tập và nghiên cứu. Nếu bạn thấy hữu ích hoặc có góp ý, hãy mở Issue hoặc liên hệ:
 
