@@ -97,17 +97,10 @@ cp .env.example .env  # Cập nhật VNSTOCK_API_KEY nếu cần thiết trong .
 ### 2. Chạy Pipeline Huấn luyện (Training Pipeline)
 
 Dự án cung cấp luồng chạy tích hợp (từ Tải dữ liệu -> Làm sạch -> Trích xuất đặc trưng -> Train -> Lưu Model).
-
-Bạn có thể chạy tự động toàn bộ tiến trình thông qua module `pipeline.py`:
-```python
-# Tạo tệp lệnh run.py tại thư mục root
-from src.pipeline import run_full_pipeline
-
-# Pipeline sẽ kết nối Vnstock, down danh sách cổ phiếu cần phân tích 
-# và chạy quy trình huấn luyện đầy đủ
-run_full_pipeline(symbols=["VCB", "FPT", "VIC", "VNM", "SSI"])
+```bash
+python scripts/run_pipeline.py
+# (Và các scripts tương ứng để chạy huấn luyện)
 ```
-*Ghi chú: Mô hình tốt nhất (cùng với Scaler và danh sách các features được chọn) sẽ tự động lưu vào thư mục `models/`.*
 
 ### 🔍 Quản lý mô hình bằng MLflow
 Để kiểm tra biểu đồ độ chính xác và lịch sử thông số của các mô hình đã được huấn luyện:
@@ -192,12 +185,10 @@ curl -X 'POST' \
 ## 💻 Công nghệ Cốt lõi (Tech Stack)
 - **Machine Learning Data Processing:** `Pandas`, `NumPy`, `Scikit-Learn`
 - **Core ML Algorithms:** `XGBoost`, `LightGBM`, `Scikit-Learn (SVM, Logsitic Regression, ANN)`
-- **Data Source API:** `vnstock` (Truy xuất dữ liệu thị trường Việt Nam)
-- **Model Monitoring:** `MLflow` (Experiment tracking & Artifact storage)
+- **Data Source API:** `vnstock` 
+- **Model Monitoring:** `MLflow` 
 - **Backend & Web API:** `FastAPI`, `Uvicorn`, `Pydantic`
 - **Infrastructure:** `Docker`, `Docker-Compose`
 
 ---
 
-## 📝 Giấy phép (License)
-Dự án được phân phối dưới giấy phép MIT. Xem tệp `pyproject.toml` để biết thêm chi tiết.
